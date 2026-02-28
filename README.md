@@ -79,6 +79,19 @@ clipboard: true
 
 Just like other Kirby built-in sections, the `label` and `help` fields can be translated.
 
+You can use either locale arrays (`de`, `en`, …) or translation keys:
+
+```yaml
+type: punctuation
+label: punctuation.section.label
+fieldsets:
+  - category:
+    label: punctuation.soft-hyphen.label
+    help: punctuation.soft-hyphen.help
+    chars:
+      - ­
+```
+
 Take a look at the section blueprint below for a full fledged example:
 
 ```yaml

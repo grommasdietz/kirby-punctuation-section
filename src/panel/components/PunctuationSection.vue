@@ -56,8 +56,27 @@ export default {
 
   methods: {
     t(value) {
-      if (!value || typeof value === "string") return value;
-      return value[this.$panel.translation.code] ?? Object.values(value)[0];
+      if (value === null || value === undefined || value === false) {
+        return value;
+      }
+
+      if (typeof value === "string") {
+        return this.$panel.t(value, null, value) ?? value;
+      }
+
+      if (typeof value !== "object") {
+        return value;
+      }
+
+      const locale = this.$panel.translation.code;
+      const shortLocale = locale?.split(/[_-]/)[0];
+
+      return (
+        value[locale] ??
+        (shortLocale ? value[shortLocale] : undefined) ??
+        value.en ??
+        Object.values(value)[0]
+      );
     },
 
     handleEditabeFocus(event) {
