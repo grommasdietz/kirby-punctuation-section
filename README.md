@@ -23,7 +23,7 @@ Requires Kirby 6 and PHP 8.3+. This maintained fork keeps Kirby 5 support on `ma
 
 ```bash
 composer config repositories.punctuation vcs https://github.com/grommasdietz/kirby-punctuation-section
-composer require johannschopplich/kirby-punctuation-section:dev-compat/kirby-6
+composer require johannschopplich/kirby-punctuation-section:dev-kirby-6
 ```
 
 ### Download
