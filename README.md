@@ -1,13 +1,8 @@
-> [!NOTE]
-> This plugin still works, however, I recommend to use the [Typo & Paste](https://github.com/philippoehrlein/typo-and-paste) plugin instead.
->
-> Development on this plugin is stale. If you require updates, feel free to DM me.
-
 ![Kirby Punctuation Section](./.github/kirby-punctuation-section.png)
 
-# Kirby Punctuation Section
+# Kirby Punctuation Field — Kirby 6 preview
 
-This plugin provides a simple, **customizable** section for your Kirby project from which your customers can quickly add punctuation to their text or writer fields.
+This plugin provides a simple, **customizable** display field for your Kirby project from which your customers can quickly add punctuation to their text or writer fields.
 
 By default, clicking one of the punctuation buttons will insert the character at the current cursor position of a text or writer field.
 
@@ -20,15 +15,15 @@ By default, clicking one of the punctuation buttons will insert the character at
 
 ## Requirements
 
-> [!NOTE]
-> The current version of this plugin requires Kirby 4 or higher. For Kirby 3 support, please use version 2 of Kirby Punctuation Section.
+Requires Kirby 6 and PHP 8.3+. This maintained fork keeps Kirby 5 support on `main`; the Kirby 6 preview uses Vue 3 and kirbyup 4 (Node 24, pnpm 12). Johann Schopplich remains the original author; the MIT license is retained.
 
 ## Installation
 
 ### Composer
 
 ```bash
-composer require johannschopplich/kirby-punctuation-section
+composer config repositories.punctuation vcs https://github.com/grommasdietz/kirby-punctuation-section
+composer require johannschopplich/kirby-punctuation-section:dev-compat/kirby-6
 ```
 
 ### Download
@@ -37,7 +32,7 @@ Download and copy this repository to `/site/plugins/kirby-punctuation-section`.
 
 ## Usage
 
-To get started, create a `sections/punctuation.yml` file in your blueprints folder and add the characters you want to use to the `chars` array. A bare minimum section example looks like this:
+To get started, create a `fields/punctuation.yml` file in your blueprints folder and add the characters you want to use to the `chars` array. A bare minimum field example looks like this:
 
 ```yaml
 type: punctuation
@@ -53,11 +48,11 @@ fieldsets:
     help: This is a description for the category
 ```
 
-After that, you can add the section to your blueprint like this:
+After that, you can add the field to your blueprint like this:
 
 ```yml
-sections:
-  punctuation: sections/punctuation
+fields:
+  punctuation: fields/punctuation
 ```
 
 ## Clipboard API
@@ -77,7 +72,7 @@ clipboard: true
 
 ## Label Translations & Help Texts
 
-Just like other Kirby built-in sections, the `label` and `help` fields can be translated.
+Just like other Kirby built-in fields, the `label` and `help` fields can be translated.
 
 You can use either locale arrays (`de`, `en`, …) or translation keys:
 
@@ -92,7 +87,7 @@ fieldsets:
       - ­
 ```
 
-Take a look at the section blueprint below for a full fledged example:
+Take a look at the field blueprint below for a full fledged example:
 
 ```yaml
 type: punctuation
@@ -152,3 +147,24 @@ fieldsets:
 ## License
 
 [MIT](./LICENSE) License © 2021-PRESENT [Johann Schopplich](https://github.com/johannschopplich)
+
+## Migrating from Kirby 5
+
+Kirby 6 removes custom sections. Move every `type: punctuation` entry from `sections` to `fields`, including entries inside columns, and use `label` instead of `headline`. The old `headline` option remains an alias when no label is supplied. `fieldsets`, category labels/help and `clipboard` keep their existing meaning. This display field never stores a content value.
+
+Update custom Panel selectors from `.k-section[type="punctuation"]` to `.k-field-type-punctuation` (or `.k-punctuation-field`). The prefixed `kps-*` classes and whitespace legend markup remain available. Existing Kirby 5 projects keep their current CSS and section plugin.
+
+Category help is trusted blueprint/translation HTML, rendered through Kirby 6's `HtmlString` transport. Character strings and labels render as text. Clipboard mode preserves the exact Unicode sequence. Insert mode replaces the current selection in native text/textarea and Writer fields, and triggers the normal content-save lifecycle.
+
+## Development
+
+```sh
+composer install
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+pnpm verify
+```
+
+The test fixture owns its temporary site, account and content; it does not modify a real project. The Kirby 6 beta's Symfony YAML pin is satisfied with a development-only alias to patched 7.4.23. Remove the alias when the core updates its pin; Composer audit stays enabled. Production installations use the committed Panel assets and do not need Node.
+
+The preview branch has no stable release tag. Publishing the Kirby 6 implementation requires a new plugin major after final core/dependency verification.

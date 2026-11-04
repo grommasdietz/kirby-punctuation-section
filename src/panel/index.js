@@ -1,8 +1,8 @@
-import PunctuationSection from "./components/PunctuationSection.vue";
+import PunctuationField from "./components/PunctuationField.vue";
 import "./index.css";
 
 window.panel.plugin("johannschopplich/punctuation-section", {
-  sections: {
-    punctuation: PunctuationSection,
+  fields: {
+    punctuation: PunctuationField,
   },
 });

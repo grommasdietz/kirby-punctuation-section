@@ -3,6 +3,7 @@ import antfu from "@antfu/eslint-config";
 export default antfu(
   {
     stylistic: false,
+    isInEditor: false,
     vue: {
       // https://github.com/antfu/eslint-config/issues/367
       sfcBlocks: {
@@ -10,9 +11,9 @@ export default antfu(
           styles: false,
         },
       },
-      vueVersion: 2,
+      vueVersion: 3,
     },
-    ignores: ["**/assets/**", "**/vendor/**", "index.js"],
+    ignores: ["**/assets/**", "**/vendor/**", "index.js", "node_modules/**"],
   },
   {
     files: ["**/*.vue"],

@@ -19,22 +19,46 @@
     }
   ],
   "require": {
-    "getkirby/composer-installer": "^1.2"
+    "getkirby/composer-installer": "^1.2",
+    "php": "^8.3"
   },
   "require-dev": {
-    "getkirby/cms": "^5"
+    "getkirby/cms": "^6.0@beta",
+    "symfony/yaml": "7.4.23 as 7.4.21",
+    "friendsofphp/php-cs-fixer": "^3.93"
   },
   "scripts": {
-    "csfix": "@php tools/phpcs/vendor/bin/php-cs-fixer fix",
-    "dist": "composer install --no-dev --optimize-autoloader"
+    "csfix": "@lint:fix",
+    "dist": "composer install --no-dev --optimize-autoloader",
+    "lint": "php-cs-fixer fix --dry-run --diff --sequential",
+    "lint:fix": "php-cs-fixer fix --sequential",
+    "test": "@php tests/field.php",
+    "verify": [
+      "@lint",
+      "@test"
+    ]
   },
   "config": {
     "optimize-autoloader": true,
     "allow-plugins": {
       "getkirby/composer-installer": true
+    },
+    "platform": {
+      "php": "8.3.16"
     }
   },
   "extra": {
-    "kirby-cms-path": false
+    "kirby-cms-path": false,
+    "kirby": {
+      "compatible": "^6.0"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "JohannSchopplich\\Punctuation\\": "src/fields/"
+    }
+  },
+  "conflict": {
+    "getkirby/cms": "<6.0 || >=7.0"
   }
 }
