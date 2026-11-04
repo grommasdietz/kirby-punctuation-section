@@ -1,7 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude('node_modules')
+    ->exclude(['node_modules', 'vendor', 'tools'])
     ->in(__DIR__);
 
 $config = new PhpCsFixer\Config();

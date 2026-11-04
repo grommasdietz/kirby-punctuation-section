@@ -1,7 +1,10 @@
 <?php
 
+use JohannSchopplich\Punctuation\PunctuationField;
 use Kirby\Cms\App;
 
+require_once __DIR__ . '/src/fields/PunctuationField.php';
+
 App::plugin('johannschopplich/punctuation-section', [
-    'sections' => require __DIR__ . '/src/extensions/sections.php'
+    'fields' => ['punctuation' => PunctuationField::class]
 ]);
