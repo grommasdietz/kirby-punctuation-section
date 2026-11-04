@@ -63,7 +63,9 @@ export async function withPanel(options, check) {
     });
     for (let attempt = 0; attempt < 100; attempt++) {
       try {
-        if ((await fetch(`${url}/panel/login`)).ok) break;
+        const response = await fetch(`${url}/panel/login`);
+        await response.arrayBuffer();
+        if (response.ok) break;
       } catch {}
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
