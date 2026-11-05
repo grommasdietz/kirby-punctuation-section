@@ -38,3 +38,4 @@ tests/ export-ignore
 .node-version export-ignore
 eslint.config.js export-ignore
 package-lock.json export-ignore
+index.dev.js export-ignore
